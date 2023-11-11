@@ -4,12 +4,12 @@ import {
   IsEnum,
   IsNotEmpty,
   IsOptional,
+  IsUUID,
 } from 'class-validator';
-import { UserRole } from '../../types/users';
-
+import { UserRole } from '../../types/userInterface';
 export class CreateUserDto {
   @IsOptional()
-  @IsString()
+  @IsUUID()
   id: string;
 
   @IsNotEmpty()
@@ -25,6 +25,6 @@ export class CreateUserDto {
   password: string;
 
   @IsOptional()
-  @IsEnum(UserRole)
+  @IsEnum(UserRole, { each: true })
   role: UserRole;
 }

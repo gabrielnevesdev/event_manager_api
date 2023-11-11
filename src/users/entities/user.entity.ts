@@ -6,10 +6,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { hash } from 'bcrypt';
 import { Event } from '../../events/entities/event.entity';
-import { UserRole } from '../../types/users';
+import { UserProfile } from '../../user_profile/entities/user_profile.entity';
+import { UserRole } from '../../types/userInterface';
 
 @Entity()
 export class User extends BaseEntity {
@@ -36,11 +38,14 @@ export class User extends BaseEntity {
   @OneToMany(() => Event, (event) => event.user)
   events: Event[];
 
+  @OneToOne(() => UserProfile, (userProfile) => userProfile.user)
+  userProfile: UserProfile;
+
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {
     if (this.password) {
-      const saltRounds = process.env.SALTROUNDS;
+      const saltRounds = Number(process.env.SALTROUNDS);
       this.password = await hash(this.password, saltRounds);
     }
   }

@@ -14,8 +14,9 @@
     "skipLibCheck": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "strictBindCallApply": false
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts"]
 }
