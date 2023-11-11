@@ -13,6 +13,7 @@ import { Event } from '../../events/entities/event.entity';
 import { UserProfile } from '../../user_profile/entities/user_profile.entity';
 import { UserRole } from '../../types/userInterface';
 import { TicketsSold } from 'src/tickets_sold/entities/tickets_sold.entity';
+import { EventReview } from 'src/event_reviews/entities/event_review.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -41,6 +42,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => TicketsSold, (ticketSold) => ticketSold.ticket)
   ticketsSold: TicketsSold[];
+
+  @OneToMany(() => EventReview, (review) => review.user)
+  reviews: EventReview[];
 
   @OneToOne(() => UserProfile, (userProfile) => userProfile.user)
   userProfile: UserProfile;

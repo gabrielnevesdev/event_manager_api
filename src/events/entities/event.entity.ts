@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Ticket } from 'src/tickets/entities/ticket.entity';
+import { EventReview } from 'src/event_reviews/entities/event_review.entity';
 
 @Entity()
 export class Event extends BaseEntity {
@@ -55,4 +56,7 @@ export class Event extends BaseEntity {
 
   @OneToMany(() => Ticket, (ticket) => ticket.event)
   tickets: Ticket[];
+
+  @OneToMany(() => EventReview, (review) => review.event)
+  reviews: EventReview[];
 }
