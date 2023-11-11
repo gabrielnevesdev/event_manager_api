@@ -17,11 +17,11 @@ export class CreateTicketDto {
   @IsInt()
   available_quantity: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(TicketsCategory, { each: true })
   ticket_category: TicketsCategory;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsNumber()
   price: number;
 }

@@ -12,6 +12,7 @@ import { hash } from 'bcrypt';
 import { Event } from '../../events/entities/event.entity';
 import { UserProfile } from '../../user_profile/entities/user_profile.entity';
 import { UserRole } from '../../types/userInterface';
+import { TicketsSold } from 'src/tickets_sold/entities/tickets_sold.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -37,6 +38,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Event, (event) => event.user)
   events: Event[];
+
+  @OneToMany(() => TicketsSold, (ticketSold) => ticketSold.ticket)
+  ticketsSold: TicketsSold[];
 
   @OneToOne(() => UserProfile, (userProfile) => userProfile.user)
   userProfile: UserProfile;
