@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: event_db
+    restart: always
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: event_db
+      PGDATA: /data/postgres
+    volumes:
+      - ./data/postgres:/data/postgres
