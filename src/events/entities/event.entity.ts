@@ -4,8 +4,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { Ticket } from 'src/tickets/entities/ticket.entity';
 
 @Entity()
 export class Event extends BaseEntity {
@@ -50,4 +52,7 @@ export class Event extends BaseEntity {
 
   @ManyToOne(() => User, (user) => user.events)
   user: User;
+
+  @OneToMany(() => Ticket, (ticket) => ticket.event)
+  tickets: Ticket[];
 }
