@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { JwtPayload } from 'jsonwebtoken';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -18,25 +20,57 @@ export class UsersService {
   }
 
   findAll(): Promise<User[]> {
-    return this.repository.find();
+    return this.repository
+      .createQueryBuilder('user')
+      .select(['user.id', 'user.username', 'user.email', 'user.role'])
+      .getMany();
   }
 
-  findOne(id: string): Promise<User> {
-    return this.repository.findOne({ where: { id } });
-  }
-
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.repository.preload({
-      id: id,
-      ...updateUserDto,
+  async findOne(id: string): Promise<User> {
+    return this.repository.findOne({
+      where: { id },
+      select: ['id', 'email', 'username', 'role'],
     });
+  }
+
+  async findByEmail(email: string) {
+    const user = await this.repository.findOne({ where: { email } });
+    return user;
+  }
+
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto,
+    req: JwtPayload,
+  ): Promise<User> {
+    if (req.user.sub != id) {
+      throw new Error('Invalid Request');
+    }
+
+    const user = await this.findOne(id);
+
     if (!user) {
       throw new NotFoundException(`User ${id} not found`);
     }
+
+    if (updateUserDto.password) {
+      const hashedPassword = await hash(
+        updateUserDto.password,
+        Number(process.env.SALTROUNDS),
+      );
+      user.password = hashedPassword;
+    }
+    user.username = updateUserDto.username || user.username;
+    user.email = updateUserDto.email || user.email;
+    user.role = updateUserDto.role || user.role;
+
     return this.repository.save(user);
   }
 
-  async remove(id: string) {
+  async remove(id: string, req: JwtPayload) {
+    if (req.user.sub !== id) {
+      throw new Error('Invalid Request ');
+    }
     const user = await this.findOne(id);
     return this.repository.remove(user);
   }
