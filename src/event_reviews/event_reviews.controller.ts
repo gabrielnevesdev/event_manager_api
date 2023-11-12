@@ -27,7 +27,7 @@ export class EventReviewsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.eventReviewsService.findOne(+id);
+    return this.eventReviewsService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class EventReviewsController {
     @Param('id') id: string,
     @Body() updateEventReviewDto: UpdateEventReviewDto,
   ) {
-    return this.eventReviewsService.update(+id, updateEventReviewDto);
+    return this.eventReviewsService.update(id, updateEventReviewDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.eventReviewsService.remove(+id);
+    return this.eventReviewsService.remove(id);
   }
 }
