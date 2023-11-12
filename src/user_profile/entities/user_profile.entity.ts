@@ -34,7 +34,7 @@ export class UserProfile extends BaseEntity {
   street: string;
 
   @Column({ name: 'number', type: 'int' })
-  number: string;
+  number: number;
 
   @Column({ name: 'zipcode', type: 'varchar', length: 10 })
   zipcode: string;
