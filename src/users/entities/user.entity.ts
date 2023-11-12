@@ -1,7 +1,6 @@
 import {
   BaseEntity,
   BeforeInsert,
-  BeforeUpdate,
   Column,
   Entity,
   PrimaryGeneratedColumn,
@@ -12,18 +11,18 @@ import { hash } from 'bcrypt';
 import { Event } from '../../events/entities/event.entity';
 import { UserProfile } from '../../user_profile/entities/user_profile.entity';
 import { UserRole } from '../../types/userInterface';
-import { TicketsSold } from 'src/tickets_sold/entities/tickets_sold.entity';
-import { EventReview } from 'src/event_reviews/entities/event_review.entity';
+import { TicketsSold } from '../../tickets_sold/entities/tickets_sold.entity';
+import { EventReview } from '../../event_reviews/entities/event_review.entity';
 
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'email', type: 'varchar', length: 120 })
+  @Column({ name: 'email', type: 'varchar', length: 120, unique: true })
   email: string;
 
-  @Column({ name: 'username', type: 'varchar', length: 80 })
+  @Column({ name: 'username', type: 'varchar', length: 80, unique: true })
   username: string;
 
   @Column({ name: 'password', type: 'varchar', length: 255 })
@@ -50,11 +49,17 @@ export class User extends BaseEntity {
   userProfile: UserProfile;
 
   @BeforeInsert()
-  @BeforeUpdate()
   async hashPassword() {
     if (this.password) {
       const saltRounds = Number(process.env.SALTROUNDS);
       this.password = await hash(this.password, saltRounds);
+    }
+  }
+
+  @BeforeInsert()
+  async generateUsername() {
+    if (this.email) {
+      this.username = this.email.split('@')[0];
     }
   }
 }

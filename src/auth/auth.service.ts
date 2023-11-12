@@ -7,8 +7,8 @@ import { UsersService } from '../users/users.service';
 @Injectable()
 export class AuthService {
   constructor(
-    private jwtService: JwtService,
     private readonly usersService: UsersService,
+    private jwtService: JwtService,
   ) {}
 
   async login(email: string, password: string) {
@@ -30,7 +30,7 @@ export class AuthService {
       email: user.email,
     };
     return {
-      access_token: this.jwtService.signAsync(payload),
+      access_token: this.jwtService.sign(payload),
     };
   }
 }
