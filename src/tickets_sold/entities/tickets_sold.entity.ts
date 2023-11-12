@@ -5,8 +5,8 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
 } from 'typeorm';
-import { User } from 'src/users/entities/user.entity';
-import { Ticket } from 'src/tickets/entities/ticket.entity';
+import { User } from '../../users/entities/user.entity';
+import { Ticket } from '../../tickets/entities/ticket.entity';
 
 @Entity()
 export class TicketsSold extends BaseEntity {
