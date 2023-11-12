@@ -27,7 +27,7 @@ export class TicketsSoldController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.ticketsSoldService.findOne(+id);
+    return this.ticketsSoldService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class TicketsSoldController {
     @Param('id') id: string,
     @Body() updateTicketsSoldDto: UpdateTicketsSoldDto,
   ) {
-    return this.ticketsSoldService.update(+id, updateTicketsSoldDto);
+    return this.ticketsSoldService.update(id, updateTicketsSoldDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.ticketsSoldService.remove(+id);
+    return this.ticketsSoldService.remove(id);
   }
 }

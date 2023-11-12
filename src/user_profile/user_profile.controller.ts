@@ -27,7 +27,7 @@ export class UserProfileController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userProfileService.findOne(+id);
+    return this.userProfileService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class UserProfileController {
     @Param('id') id: string,
     @Body() updateUserProfileDto: UpdateUserProfileDto,
   ) {
-    return this.userProfileService.update(+id, updateUserProfileDto);
+    return this.userProfileService.update(id, updateUserProfileDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.userProfileService.remove(+id);
+    return this.userProfileService.remove(id);
   }
 }

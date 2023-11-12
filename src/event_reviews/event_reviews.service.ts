@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateEventReviewDto } from './dto/create-event_review.dto';
 import { UpdateEventReviewDto } from './dto/update-event_review.dto';
+import { EventReview } from './entities/event_review.entity';
 
 @Injectable()
 export class EventReviewsService {
-  create(createEventReviewDto: CreateEventReviewDto) {
-    return 'This action adds a new eventReview';
+  constructor(
+    @InjectRepository(EventReview)
+    private readonly repository: Repository<EventReview>,
+  ) {}
+
+  create(createEventReviewDto: CreateEventReviewDto): Promise<EventReview> {
+    const review = this.repository.create(createEventReviewDto);
+    return this.repository.save(review);
   }
 
-  findAll() {
-    return `This action returns all eventReviews`;
+  findAll(): Promise<EventReview[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} eventReview`;
+  findOne(id: string): Promise<EventReview> {
+    return this.repository.findOne({ where: { id } });
   }
 
-  update(id: number, updateEventReviewDto: UpdateEventReviewDto) {
-    return `This action updates a #${id} eventReview`;
+  async update(
+    id: string,
+    updateEventReviewDto: UpdateEventReviewDto,
+  ): Promise<EventReview> {
+    const review = await this.repository.preload({
+      id: id,
+      ...updateEventReviewDto,
+    });
+    if (!review) {
+      throw new NotFoundException(`Review ${id} not found`);
+    }
+    return this.repository.save(review);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} eventReview`;
+  async remove(id: string) {
+    const review = await this.findOne(id);
+    return this.repository.remove(review);
   }
 }

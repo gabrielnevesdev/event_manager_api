@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { UserProfileModule } from './user_profile/user_profile.module';
 import { EventsModule } from './events/events.module';
@@ -30,7 +28,5 @@ import { TicketsSoldModule } from './tickets_sold/tickets_sold.module';
     EventReviewsModule,
     TicketsSoldModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
-export class AppModule {}
+export class TypeORMConfig {}

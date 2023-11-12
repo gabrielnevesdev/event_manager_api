@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateTicketsSoldDto } from './dto/create-tickets_sold.dto';
 import { UpdateTicketsSoldDto } from './dto/update-tickets_sold.dto';
+import { TicketsSold } from './entities/tickets_sold.entity';
 
 @Injectable()
 export class TicketsSoldService {
-  create(createTicketsSoldDto: CreateTicketsSoldDto) {
-    return 'This action adds a new ticketsSale';
+  constructor(
+    @InjectRepository(TicketsSold)
+    private readonly repository: Repository<TicketsSold>,
+  ) {}
+
+  create(createTicketsSoldDto: CreateTicketsSoldDto): Promise<TicketsSold> {
+    const ticket = this.repository.create(createTicketsSoldDto);
+    return this.repository.save(ticket);
   }
 
-  findAll() {
-    return `This action returns all ticketsSales`;
+  findAll(): Promise<TicketsSold[]> {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} ticketsSale`;
+  findOne(id: string): Promise<TicketsSold> {
+    return this.repository.findOne({ where: { id } });
   }
 
-  update(id: number, updateTicketsSoldDto: UpdateTicketsSoldDto) {
-    return `This action updates a #${id} ticketsSale`;
+  async update(
+    id: string,
+    updateTicketsSoldDto: UpdateTicketsSoldDto,
+  ): Promise<TicketsSold> {
+    const ticket = await this.repository.preload({
+      id: id,
+      ...updateTicketsSoldDto,
+    });
+    if (!ticket) {
+      throw new NotFoundException(`TicketsSold ${id} not found`);
+    }
+    return this.repository.save(ticket);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} ticketsSale`;
+  async remove(id: string) {
+    const ticket = await this.findOne(id);
+    return this.repository.remove(ticket);
   }
 }
