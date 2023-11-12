@@ -6,9 +6,9 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { Event } from 'src/events/entities/event.entity';
-import { TicketsCategory } from 'src/types/ticketsInterface';
-import { TicketsSold } from 'src/tickets_sold/entities/tickets_sold.entity';
+import { Event } from '../../events/entities/event.entity';
+import { TicketsCategory } from '../../types/ticketsInterface';
+import { TicketsSold } from '../../tickets_sold/entities/tickets_sold.entity';
 
 @Entity()
 export class Ticket extends BaseEntity {
