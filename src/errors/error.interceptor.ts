@@ -21,10 +21,17 @@ export class ErrorInterceptor implements ExceptionFilter {
         message,
       });
     } else {
-      response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: 'Internal Server Error',
-      });
+      if (exception.message.includes('duplicate key')) {
+        response.status(HttpStatus.BAD_REQUEST).json({
+          status: HttpStatus.BAD_REQUEST,
+          message: 'Email already in use',
+        });
+      } else {
+        response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal Server Error',
+        });
+      }
     }
   }
 }
