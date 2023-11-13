@@ -8,6 +8,7 @@ import { EventReviewsModule } from './event_reviews/event_reviews.module';
 import { TicketsSoldModule } from './tickets_sold/tickets_sold.module';
 import { TypeormModule } from './typeorm.module';
 import { AuthModule } from './auth/auth.module';
+import { ErrorModule } from './errors/error.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AuthModule } from './auth/auth.module';
     EventReviewsModule,
     TicketsSoldModule,
     AuthModule,
+    ErrorModule,
   ],
   controllers: [],
   providers: [],
