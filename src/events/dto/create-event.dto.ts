@@ -2,7 +2,6 @@ import {
   IsUUID,
   IsString,
   IsBoolean,
-  IsDate,
   IsInt,
   IsOptional,
   IsNotEmpty,
@@ -34,11 +33,9 @@ export class CreateEventDto {
   is_enabled: boolean;
 
   @IsNotEmpty()
-  @IsDate()
   start_date: Date;
 
   @IsNotEmpty()
-  @IsDate()
   end_date: Date;
 
   @IsNotEmpty()

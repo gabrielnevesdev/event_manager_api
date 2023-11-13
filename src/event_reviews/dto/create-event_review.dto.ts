@@ -18,4 +18,8 @@ export class CreateEventReviewDto {
   @IsOptional()
   @IsString()
   comment: string;
+
+  @IsNotEmpty()
+  @IsUUID()
+  eventId: string;
 }

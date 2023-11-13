@@ -24,4 +24,8 @@ export class CreateTicketDto {
   @IsNotEmpty()
   @IsNumber()
   price: number;
+
+  @IsNotEmpty()
+  @IsUUID()
+  eventId: string;
 }
