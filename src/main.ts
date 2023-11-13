@@ -12,6 +12,11 @@ async function bootstrap() {
     .setTitle('Event Manager')
     .setDescription('An APi to manager and search events')
     .setVersion('1.0')
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+    })
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

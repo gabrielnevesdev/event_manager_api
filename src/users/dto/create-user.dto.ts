@@ -40,7 +40,7 @@ export class CreateUserDto {
   username: string;
 
   @ApiProperty({
-    description: 'User Password',
+    description: 'User password must be bigger than or equal to 8 characters',
     type: 'string',
   })
   @IsNotEmpty()

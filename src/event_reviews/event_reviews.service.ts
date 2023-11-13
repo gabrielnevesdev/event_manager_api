@@ -25,6 +25,15 @@ export class EventReviewsService {
   ): Promise<EventReview> {
     const user = await this.userService.findOne(req.user.sub);
     const event = await this.eventService.findOne(createEventReviewDto.eventId);
+    if (!event) {
+      throw this.errorService.handleGenericError(401, 'Invalid event');
+    }
+    if (createEventReviewDto.rate > 5 || createEventReviewDto.rate < 1) {
+      throw this.errorService.handleGenericError(
+        400,
+        'The rate must be from 1 to 5',
+      );
+    }
     const review = this.repository.create({
       ...createEventReviewDto,
       event,
