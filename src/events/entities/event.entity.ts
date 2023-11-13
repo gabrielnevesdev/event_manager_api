@@ -30,10 +30,10 @@ export class Event extends BaseEntity {
   @Column({ name: 'is_enabled', type: 'boolean', default: true })
   is_enabled: boolean;
 
-  @Column({ name: 'start_date', type: 'date' })
+  @Column({ name: 'start_date', type: 'timestamp' })
   start_date: Date;
 
-  @Column({ name: 'end_date', type: 'date' })
+  @Column({ name: 'end_date', type: 'timestamp' })
   end_date: Date;
 
   @Column({ name: 'state', type: 'varchar', length: 100 })

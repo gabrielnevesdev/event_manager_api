@@ -5,7 +5,8 @@ import { CreateUserProfileDto } from './dto/create-user_profile.dto';
 import { UpdateUserProfileDto } from './dto/update-user_profile.dto';
 import { UserProfile } from './entities/user_profile.entity';
 import { JwtPayload } from 'jsonwebtoken';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
+import { ErrorService } from '../errors/error.service';
 
 @Injectable()
 export class UserProfileService {
@@ -13,6 +14,7 @@ export class UserProfileService {
     @InjectRepository(UserProfile)
     private readonly repository: Repository<UserProfile>,
     private readonly userService: UsersService,
+    private readonly errorService: ErrorService,
   ) {}
 
   async create(
@@ -50,11 +52,14 @@ export class UserProfileService {
       ...updateUserProfileDto,
     });
     if (!profile) {
-      throw new NotFoundException(`UserProfile ${id} not found`);
+      throw new NotFoundException(`UserProfile not found`);
     }
     const profileWithUser = await this.findOne(id);
     if (req.user.sub !== profileWithUser.user.id) {
-      throw new Error('Invalid Request ');
+      throw this.errorService.handleGenericError(
+        401,
+        'you do not own this profile',
+      );
     }
     return this.repository.save(profile);
   }
@@ -63,7 +68,10 @@ export class UserProfileService {
     const profile = await this.findOne(id);
 
     if (req.user.sub !== profile.user.id) {
-      throw new Error('Invalid Request ');
+      throw this.errorService.handleGenericError(
+        401,
+        'you do not own this profile',
+      );
     }
     return this.repository.remove(profile);
   }

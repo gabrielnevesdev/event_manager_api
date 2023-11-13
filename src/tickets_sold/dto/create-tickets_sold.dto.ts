@@ -15,7 +15,11 @@ export class CreateTicketsSoldDto {
   @IsInt()
   quantity_purchased: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   total_payment: number;
+
+  @IsNotEmpty()
+  @IsUUID()
+  ticketId: string;
 }

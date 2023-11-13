@@ -4,9 +4,18 @@ import { TicketsSoldService } from './tickets_sold.service';
 import { TicketsSoldController } from './tickets_sold.controller';
 import { TicketsSold } from './entities/tickets_sold.entity';
 import { AuthModule } from '../auth/auth.module';
+import { UsersModule } from 'src/users/users.module';
+import { TicketsModule } from 'src/tickets/tickets.module';
+import { ErrorModule } from 'src/errors/error.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TicketsSold]), AuthModule],
+  imports: [
+    TypeOrmModule.forFeature([TicketsSold]),
+    AuthModule,
+    UsersModule,
+    TicketsModule,
+    ErrorModule,
+  ],
   controllers: [TicketsSoldController],
   providers: [TicketsSoldService],
 })

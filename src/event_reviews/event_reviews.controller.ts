@@ -7,11 +7,14 @@ import {
   Param,
   Delete,
   UseGuards,
+  Request,
+  Query,
 } from '@nestjs/common';
 import { EventReviewsService } from './event_reviews.service';
 import { CreateEventReviewDto } from './dto/create-event_review.dto';
 import { UpdateEventReviewDto } from './dto/update-event_review.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
+import { JwtPayload } from 'jsonwebtoken';
 
 @Controller('event_reviews')
 export class EventReviewsController {
@@ -19,17 +22,22 @@ export class EventReviewsController {
 
   @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createEventReviewDto: CreateEventReviewDto) {
-    return this.eventReviewsService.create(createEventReviewDto);
+  create(
+    @Body() createEventReviewDto: CreateEventReviewDto,
+    @Request() req: JwtPayload,
+  ) {
+    return this.eventReviewsService.create(createEventReviewDto, req);
   }
 
-  @UseGuards(AuthGuard)
-  @Get()
-  findAll() {
-    return this.eventReviewsService.findAll();
+  @Get('/event/:id')
+  findAll(
+    @Query('page') page: number = 1,
+    @Query('pageSize') pageSize: number = 10,
+    @Param('id') id: string,
+  ) {
+    return this.eventReviewsService.findAll(id, page, pageSize);
   }
 
-  @UseGuards(AuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.eventReviewsService.findOne(id);
@@ -40,13 +48,14 @@ export class EventReviewsController {
   update(
     @Param('id') id: string,
     @Body() updateEventReviewDto: UpdateEventReviewDto,
+    @Request() req: JwtPayload,
   ) {
-    return this.eventReviewsService.update(id, updateEventReviewDto);
+    return this.eventReviewsService.update(id, updateEventReviewDto, req);
   }
 
   @UseGuards(AuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.eventReviewsService.remove(id);
+  remove(@Param('id') id: string, @Request() req: JwtPayload) {
+    return this.eventReviewsService.remove(id, req);
   }
 }
