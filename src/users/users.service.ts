@@ -6,12 +6,14 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { JwtPayload } from 'jsonwebtoken';
 import { hash } from 'bcrypt';
+import { ErrorService } from '../errors/error.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly repository: Repository<User>,
+    private readonly errorService: ErrorService,
   ) {}
 
   create(createUserDto: CreateUserDto): Promise<User> {
@@ -44,13 +46,16 @@ export class UsersService {
     req: JwtPayload,
   ): Promise<User> {
     if (req.user.sub != id) {
-      throw new Error('Invalid Request');
+      throw this.errorService.handleGenericError(
+        401,
+        'you do not own this user',
+      );
     }
 
     const user = await this.findOne(id);
 
     if (!user) {
-      throw new NotFoundException(`User ${id} not found`);
+      throw new NotFoundException(`User not found`);
     }
 
     if (updateUserDto.password) {
@@ -69,7 +74,10 @@ export class UsersService {
 
   async remove(id: string, req: JwtPayload) {
     if (req.user.sub !== id) {
-      throw new Error('Invalid Request ');
+      throw this.errorService.handleGenericError(
+        401,
+        'you do not own this user',
+      );
     }
     const user = await this.findOne(id);
     return this.repository.remove(user);
