@@ -17,6 +17,12 @@ export class UsersService {
   ) {}
 
   create(createUserDto: CreateUserDto): Promise<User> {
+    if (createUserDto.password.length < 8) {
+      throw this.errorService.handleGenericError(
+        400,
+        'Password must be bigger than or equal to 8 characters',
+      );
+    }
     const user = this.repository.create(createUserDto);
     return this.repository.save(user);
   }
