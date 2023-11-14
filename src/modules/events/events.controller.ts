@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Request,
+  Query,
 } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -21,6 +22,7 @@ import {
   ApiParam,
   ApiBody,
   ApiBearerAuth,
+  ApiQuery,
 } from '@nestjs/swagger';
 
 @ApiTags('Events')
@@ -40,9 +42,14 @@ export class EventsController {
 
   @Get()
   @ApiOperation({ summary: 'List all events' })
+  @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
+  @ApiQuery({ name: 'pageSize', required: false, type: Number, example: 10 })
   @ApiResponse({ status: 200, description: 'Success', type: [CreateEventDto] })
-  findAll() {
-    return this.eventsService.findAll();
+  findAll(
+    @Query('page') page: number = 1,
+    @Query('pageSize') pageSize: number = 10,
+  ) {
+    return this.eventsService.findAll(page, pageSize);
   }
 
   @Get(':id')

@@ -43,6 +43,7 @@ export class EventsService {
         street: event.street,
         city: event.city,
         state: event.state,
+        number: event.number,
         zipcode: event.zipcode,
         start_date: event.start_date,
       },
@@ -57,8 +58,14 @@ export class EventsService {
     return this.repository.save(event);
   }
 
-  findAll(): Promise<Event[]> {
-    return this.repository.find({ where: { is_enabled: true } });
+  findAll(page: number, pageSize: number): Promise<Event[]> {
+    return this.repository
+      .createQueryBuilder('event')
+      .select(['event.*'])
+      .andWhere('event.is_enabled = true')
+      .limit(pageSize)
+      .offset((page - 1) * pageSize)
+      .getRawMany();
   }
 
   async findOne(id: string): Promise<Event> {
@@ -99,6 +106,7 @@ export class EventsService {
         city: event.city,
         state: event.state,
         zipcode: event.zipcode,
+        number: event.number,
         start_date: event.start_date,
       },
     });
