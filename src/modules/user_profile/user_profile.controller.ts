@@ -20,7 +20,7 @@ import {
 import { UserProfileService } from './user_profile.service';
 import { CreateUserProfileDto } from './dto/create-user_profile.dto';
 import { UpdateUserProfileDto } from './dto/update-user_profile.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/modules/auth/auth.guard';
 import { JwtPayload } from 'jsonwebtoken';
 
 @ApiBearerAuth()

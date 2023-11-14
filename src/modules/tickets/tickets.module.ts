@@ -4,7 +4,7 @@ import { TicketsService } from './tickets.service';
 import { TicketsController } from './tickets.controller';
 import { Ticket } from './entities/ticket.entity';
 import { AuthModule } from '../auth/auth.module';
-import { EventsModule } from 'src/events/events.module';
+import { EventsModule } from 'src/modules/events/events.module';
 import { ErrorModule } from 'src/errors/error.module';
 
 @Module({

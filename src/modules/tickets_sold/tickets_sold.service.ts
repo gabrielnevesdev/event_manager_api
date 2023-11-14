@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { CreateTicketsSoldDto } from './dto/create-tickets_sold.dto';
 import { TicketsSold } from './entities/tickets_sold.entity';
 import { JwtPayload } from 'jsonwebtoken';
-import { TicketsService } from 'src/tickets/tickets.service';
-import { UsersService } from 'src/users/users.service';
+import { TicketsService } from 'src/modules/tickets/tickets.service';
+import { UsersService } from 'src/modules/users/users.service';
 import { ErrorService } from 'src/errors/error.service';
 
 @Injectable()

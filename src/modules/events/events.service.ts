@@ -4,9 +4,9 @@ import { Not, Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Event } from './entities/event.entity';
-import { ErrorService } from '../errors/error.service';
+import { ErrorService } from 'src/errors/error.service';
 import { JwtPayload } from 'jsonwebtoken';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from 'src/modules/users/users.service';
 
 @Injectable()
 export class EventsService {

@@ -4,8 +4,8 @@ import { TicketsSoldService } from './tickets_sold.service';
 import { TicketsSoldController } from './tickets_sold.controller';
 import { TicketsSold } from './entities/tickets_sold.entity';
 import { AuthModule } from '../auth/auth.module';
-import { UsersModule } from 'src/users/users.module';
-import { TicketsModule } from 'src/tickets/tickets.module';
+import { UsersModule } from 'src/modules/users/users.module';
+import { TicketsModule } from 'src/modules/tickets/tickets.module';
 import { ErrorModule } from 'src/errors/error.module';
 
 @Module({

@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Event } from '../../events/entities/event.entity';
-import { TicketsCategory } from '../../types/ticketsInterface';
+import { TicketsCategory } from 'src/types/ticketsInterface';
 import { TicketsSold } from '../../tickets_sold/entities/tickets_sold.entity';
 
 @Entity()

@@ -10,7 +10,7 @@ import {
 import { hash } from 'bcrypt';
 import { Event } from '../../events/entities/event.entity';
 import { UserProfile } from '../../user_profile/entities/user_profile.entity';
-import { UserRole } from '../../types/userInterface';
+import { UserRole } from '../../../types/userInterface';
 import { TicketsSold } from '../../tickets_sold/entities/tickets_sold.entity';
 import { EventReview } from '../../event_reviews/entities/event_review.entity';
 

@@ -6,7 +6,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { JwtPayload } from 'jsonwebtoken';
 import { hash } from 'bcrypt';
-import { ErrorService } from '../errors/error.service';
+import { ErrorService } from '../../errors/error.service';
 
 @Injectable()
 export class UsersService {
