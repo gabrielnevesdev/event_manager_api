@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { Ticket } from './entities/ticket.entity';
-import { EventsService } from 'src/events/events.service';
-import { ErrorService } from '../errors/error.service';
+import { EventsService } from 'src/modules/events/events.service';
+import { ErrorService } from 'src/errors/error.service';
 import { JwtPayload } from 'jsonwebtoken';
 
 @Injectable()

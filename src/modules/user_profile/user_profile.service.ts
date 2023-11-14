@@ -6,7 +6,7 @@ import { UpdateUserProfileDto } from './dto/update-user_profile.dto';
 import { UserProfile } from './entities/user_profile.entity';
 import { JwtPayload } from 'jsonwebtoken';
 import { UsersService } from '../users/users.service';
-import { ErrorService } from '../errors/error.service';
+import { ErrorService } from '../../errors/error.service';
 
 @Injectable()
 export class UserProfileService {

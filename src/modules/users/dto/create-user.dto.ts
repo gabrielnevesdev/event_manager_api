@@ -7,7 +7,7 @@ import {
   IsUUID,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserRole } from '../../types/userInterface';
+import { UserRole } from '../../../types/userInterface';
 
 export class CreateUserDto {
   @IsOptional()

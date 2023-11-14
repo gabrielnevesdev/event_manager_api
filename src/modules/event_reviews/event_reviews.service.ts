@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { CreateEventReviewDto } from './dto/create-event_review.dto';
 import { UpdateEventReviewDto } from './dto/update-event_review.dto';
 import { EventReview } from './entities/event_review.entity';
-import { UsersService } from 'src/users/users.service';
-import { EventsService } from 'src/events/events.service';
+import { UsersService } from 'src/modules/users/users.service';
+import { EventsService } from 'src/modules/events/events.service';
 import { JwtPayload } from 'jsonwebtoken';
 import { ErrorService } from 'src/errors/error.service';
 

@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './users/users.module';
-import { UserProfileModule } from './user_profile/user_profile.module';
-import { EventsModule } from './events/events.module';
-import { TicketsModule } from './tickets/tickets.module';
-import { EventReviewsModule } from './event_reviews/event_reviews.module';
-import { TicketsSoldModule } from './tickets_sold/tickets_sold.module';
+import { UsersModule } from './modules/users/users.module';
+import { UserProfileModule } from './modules/user_profile/user_profile.module';
+import { EventsModule } from './modules/events/events.module';
+import { TicketsModule } from './modules/tickets/tickets.module';
+import { EventReviewsModule } from './modules/event_reviews/event_reviews.module';
+import { TicketsSoldModule } from './modules/tickets_sold/tickets_sold.module';
 import { TypeormModule } from './db/typeorm.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { ErrorModule } from './errors/error.module';
 
 @Module({
