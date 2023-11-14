@@ -37,7 +37,7 @@ export class UsersService {
   async findOne(id: string): Promise<User> {
     return this.repository.findOne({
       where: { id },
-      select: ['id', 'email', 'username', 'role'],
+      select: ['id', 'username', 'email', 'role'],
     });
   }
 
@@ -58,7 +58,12 @@ export class UsersService {
       );
     }
 
-    const user = await this.findOne(id);
+    const user = await this.repository
+      .createQueryBuilder('user')
+      .where({ id })
+      .select(['user.id', 'user.email', 'user.username', 'user.role'])
+      .leftJoinAndSelect('user.events', 'events', 'events.is_enabled = true')
+      .getOne();
 
     if (!user) {
       throw new NotFoundException(`User not found`);
@@ -70,6 +75,16 @@ export class UsersService {
         Number(process.env.SALTROUNDS),
       );
       user.password = hashedPassword;
+    }
+    if (
+      updateUserDto.role &&
+      updateUserDto.role == 'user' &&
+      user.events.length > 0
+    ) {
+      throw this.errorService.handleGenericError(
+        401,
+        'Users with active events cannot change their role',
+      );
     }
     user.username = updateUserDto.username || user.username;
     user.email = updateUserDto.email || user.email;
